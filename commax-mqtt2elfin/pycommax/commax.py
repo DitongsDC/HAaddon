@@ -9,7 +9,7 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
-version = 'v2'
+version = 'v1.3.3'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
@@ -46,7 +46,7 @@ def main(CONFIG, OPTION, device_list):
     def make_hex_temp(k, curTemp, setTemp, state):  # 온도조절기 16자리 (8byte) hex 만들기
         log("k = {}, curTemp = {}, setTemp = {}, state = {}".format(k, curTemp, setTemp, state))
 
-        if state == 'OFF' or state == 'ON' or state == 'CHANGE' or state == 'COMEBACK':
+        if state == 'OFF' or state == 'ON' or state == 'CHANGE' or state == 'COMEBACK' or state == 'OUTING':
             tmp_hex = device_list['Thermo'].get('command' + state)
             change = device_list['Thermo'].get('commandNUM')
             tmp_hex = make_hex(k, tmp_hex, change)
@@ -198,14 +198,11 @@ def main(CONFIG, OPTION, device_list):
     async def recv_from_elfin(data):
         COLLECTDATA['LastRecv'] = time.time_ns()
         if data:
-            if HOMESTATE.get('EV1power') == 'ON':
-                if COLLECTDATA['EVtime'] < time.time():
-                    await update_state('EV', 0, 'OFF')
             for que in QUEUE:
                 if data in que['recvcmd']:
                     QUEUE.remove(que)
                     if debug:
-                        log('[DEBUG] Found matched hex: {}. Delete a queue: {}'.format(raw_data, que))
+                        log('[DEBUG] Found matched hex: {}. Delete a queue: {}'.format(data, que))
                     break
 
             device_name = prefix_list.get(data[:2])
@@ -218,8 +215,15 @@ def main(CONFIG, OPTION, device_list):
                 onoffNUM = device_list['Thermo']['stateONOFFNUM']
                 staNUM = device_list['Thermo']['stateNUM']
                 index = int(data[staNUM - 1]) - 1
-                onoff = 'ON' if int(data[onoffNUM - 1]) > 0 else 'OFF'
-                await update_state(device_name, index, onoff)
+                onoff = 'OFF' 
+                outcom = 'COMBACK'
+                
+                if int(data[onoffNUM - 1]) > 0:
+                    onoff = 'ON'
+                if int(data[onoffNUM - 1]) == 4:
+                    outcom = 'OUTING'
+
+                await update_state(device_name, index, onoff, outcom)
                 await update_temperature(index, curT, setT)
 
             else:
@@ -243,11 +247,26 @@ def main(CONFIG, OPTION, device_list):
             HOMESTATE[key] = onoff
             topic = STATE_TOPIC.format(tsHo +'_'+ deviceID, state)
             mqtt_client.publish(topic, onoff.encode())
+
             if mqtt_log:
                 log('[LOG] ->> HA : {} >> {}'.format(topic, onoff))
         else:
             if debug:
                 log('[DEBUG] {} is already set: {}'.format(deviceID, onoff))
+        return
+
+    async def update_outcom(device, idx, outcom):
+        state = 'state_outing'
+        deviceID = device + str(idx + 1)
+        key = deviceID + state
+
+        HOMESTATE[key] = outcom
+        topic = STATE_TOPIC.format(tsHo +'_'+ deviceID, state)
+        mqtt_client.publish(topic, outcom.encode())
+
+        if mqtt_log:
+            log('[LOG] ->> HA : {} >> {}'.format(topic, outcom))
+
         return
 
     async def update_temperature(idx, curTemp, setTemp):
@@ -366,7 +385,7 @@ def main(CONFIG, OPTION, device_list):
                             # 82 81 01 25 27 00 00 50 
                             #     ^ 0=OFF, 1=ON, 2=외출해제, 4=외출
                             onoff = int(recv[3:4])
-                            log("[DC-sync] onoff = {}".format(onoff))
+                            outcom = int(recv[3:4])
 
                             dev = int(recv[5:6])
                             curTemp = str(recv[6:8])
@@ -374,13 +393,17 @@ def main(CONFIG, OPTION, device_list):
 
                             if onoff == 0:
                                 onoff = 'OFF'
-                            elif onoff == 4:
-                                onoff = 'OUTING'
                             else:
                                 onoff = 'ON'
 
-                            log("[DC-sync] dev = {}, onoff = {}, curTemp = {}, setTemp = {}".format(dev, onoff, curTemp, setTemp))
+                            if outcom == 4:
+                                outcom = "OUTING"
+                            else:
+                                outcom = "COMBACK"
+
+                            log("[DC-sync] dev = {}, onoff = {}, outcom = {}, curTemp = {}, setTemp = {}".format(dev, onoff, outcom, curTemp, setTemp))
                             await update_state('Thermo', dev-1, onoff)
+                            await update_outcom('Thermo', dev-1, outcom)
                             await update_temperature(dev-1, curTemp, setTemp)
 
                         else:

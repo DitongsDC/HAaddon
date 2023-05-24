@@ -9,7 +9,7 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
-version = 'v1.3.5'
+version = 'v1.3.6'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
@@ -244,6 +244,14 @@ def main(CONFIG, OPTION, device_list):
         deviceID = device + str(idx + 1)
         key = deviceID + state
 
+        HOMESTATE[key] = onoff
+        topic = STATE_TOPIC.format(tsHo +'_'+ deviceID, state)
+        mqtt_client.publish(topic, onoff.encode())
+
+        if mqtt_log:
+            log('[LOG] ->> HA : {} >> {}'.format(topic, onoff))
+
+        '''
         if onoff != HOMESTATE.get(key):
             HOMESTATE[key] = onoff
             topic = STATE_TOPIC.format(tsHo +'_'+ deviceID, state)
@@ -254,6 +262,7 @@ def main(CONFIG, OPTION, device_list):
         else:
             if debug:
                 log('[DEBUG] {} is already set: {}'.format(deviceID, onoff))
+        '''
         return
 
     async def update_outcom(device, idx, outcom):

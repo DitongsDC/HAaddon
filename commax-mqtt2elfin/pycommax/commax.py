@@ -9,7 +9,7 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
-version = 'v1.3.3'
+version = 'v1.3.4'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
@@ -223,7 +223,8 @@ def main(CONFIG, OPTION, device_list):
                 if int(data[onoffNUM - 1]) == 4:
                     outcom = 'OUTING'
 
-                await update_state(device_name, index, onoff, outcom)
+                await update_state(device_name, index, onoff)
+                await update_outcom(device_name, index, outcom)
                 await update_temperature(index, curT, setT)
 
             else:

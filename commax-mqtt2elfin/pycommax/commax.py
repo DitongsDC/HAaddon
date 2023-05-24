@@ -365,6 +365,8 @@ def main(CONFIG, OPTION, device_list):
                             # 82 81 01 25 27 00 00 50 
                             #     ^ 0=OFF, 1=ON, 2=외출해제, 4=외출
                             onoff = int(recv[3:4])
+                            log("[DC-sync] onoff = {}".format(onoff))
+
                             dev = int(recv[5:6])
                             curTemp = str(recv[6:8])
                             setTemp = str(recv[8:10])
@@ -377,8 +379,8 @@ def main(CONFIG, OPTION, device_list):
                                 onoff = 'ON'
 
                             log("[DC-sync] dev = {}, onoff = {}, curTemp = {}, setTemp = {}".format(dev, onoff, curTemp, setTemp))
-                            await update_state('Thermo', dev - 1, onoff)
-                            await update_temperature(dev - 1, curTemp, setTemp)
+                            await update_state('Thermo', dev-1, onoff)
+                            await update_temperature(dev-1, curTemp, setTemp)
 
                         else:
                             await slice_raw_data(recvBytes.hex().upper())
@@ -497,7 +499,7 @@ def main(CONFIG, OPTION, device_list):
 
 if __name__ == '__main__':
 
-    log('[DC] version = 2023.05.24')
+    log('[DC] version = 2023.05.24_2')
 
     with open(config_dir + '/options.json') as file:
         CONFIG = json.load(file)

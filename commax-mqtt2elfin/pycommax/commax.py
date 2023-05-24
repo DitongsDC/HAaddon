@@ -9,10 +9,11 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
+version = 'v2'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
-    print('[{}] {}'.format(date, string))
+    print('{} [{}] {}'.format(version, date, string))
     return
 
 def main(CONFIG, OPTION, device_list):

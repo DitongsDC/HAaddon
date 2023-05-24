@@ -9,7 +9,7 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
-version = 'v1.3.4'
+version = 'v1.3.5'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
@@ -257,12 +257,14 @@ def main(CONFIG, OPTION, device_list):
         return
 
     async def update_outcom(device, idx, outcom):
+        # 소문자로 변경
+        outcom = outcom.lower()
         state = 'state_outing'
         deviceID = device + str(idx + 1)
         key = deviceID + state
 
         HOMESTATE[key] = outcom
-        topic = STATE_TOPIC.format(tsHo +'_'+ deviceID, state)
+        topic = 'homenet/'+ tsHo +'_'+ deviceID +'/power/state_outing'
         mqtt_client.publish(topic, outcom.encode())
 
         if mqtt_log:

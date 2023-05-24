@@ -500,8 +500,6 @@ def main(CONFIG, OPTION, device_list):
 
 if __name__ == '__main__':
 
-    log('[DC] version = 2023.05.24_2')
-
     with open(config_dir + '/options.json') as file:
         CONFIG = json.load(file)
 

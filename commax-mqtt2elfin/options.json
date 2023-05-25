@@ -1,0 +1,24 @@
+{
+  "DEBUG": true,
+  "mqtt_log": true,
+  "elfin_log": true,
+  "save_unregistered_signal": true
+  ,
+  "mqtt_server": "192.168.88.10",
+  "mqtt_id": "mqtt",
+  "mqtt_password": "tabspace2021"
+  ,
+  "elfin_server": "192.168.88.8",
+  "elfin_id": "admin",
+  "elfin_password": "admin"
+  ,
+  "Number_of_households": 1
+  ,
+  "1-ip": "192.168.1.10",
+  "1-lake": "101",
+  "1-valves": 4
+  ,
+  "2-ip": "192.168.1.10",
+  "2-lake": "101",
+  "2-valves": 4
+}

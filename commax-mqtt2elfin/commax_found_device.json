@@ -1,0 +1,112 @@
+{
+	"device": 
+	[
+		{
+			"tsDong": "DC",
+			"tsHo": "103ho",
+			"tsElfinIp": "192.168.88.197",
+			"tsElfinPort": 5000,
+			"Thermo":
+			{
+				"Number"			: 4,
+				"commandOFF"		: "0401048000000089",
+				"commandON"			: "040104810000008A",
+				"commandCHANGE"		: "040103220000002A",
+				"commandCOMEBACK"	: "040104820000008D",
+				"commandOUTING"		: "040104840000008B",
+				"commandNUM"		: 4,
+				"curTemp"			: 7,
+				"setTemp"			: 9,
+				"chaTemp"			: 7,
+				"stateOFF"			: "848101232500004E",
+				"stateON"			: "848001232500004D",
+				"stateNUM"			: 6,
+				"stateONOFFNUM"		: 4
+			}
+		},
+		{
+			"tsDong": "DC",
+			"tsHo": "102ho",
+			"tsElfinIp": "192.168.88.13",
+			"tsElfinPort": 5000,
+			"Thermo":
+			{
+				"Number": 		 3,
+				"commandOFF": 	 "0401048000000089",
+				"commandON": 	 "040104810000008A",
+				"commandCHANGE": "040103220000002A",
+				"commandNUM": 	 4,
+				"curTemp": 		 7,
+				"setTemp": 		 9,
+				"chaTemp": 		 7,
+				"stateOFF": 	 "848101232500004E",
+				"stateON": 		 "848001232500004D",
+				"stateNUM": 	 6,
+				"stateONOFFNUM": 4
+			}
+		},
+		{
+			"tsDong": "DC",
+			"tsHo": "104ho",
+			"tsElfinIp": "192.168.88.6",
+			"tsElfinPort": 5000,
+			"Thermo":
+			{
+				"Number": 		 3,
+				"commandOFF": 	 "0401048000000089",
+				"commandON": 	 "040104810000008A",
+				"commandCHANGE": "040103220000002A",
+				"commandNUM": 	 4,
+				"curTemp": 		 7,
+				"setTemp": 		 9,
+				"chaTemp": 		 7,
+				"stateOFF": 	 "848101232500004E",
+				"stateON": 		 "848001232500004D",
+				"stateNUM": 	 6,
+				"stateONOFFNUM": 4
+			}
+		},
+		{
+			"tsDong": "DC",
+			"tsHo": "105ho",
+			"tsElfinIp": "192.168.88.4",
+			"tsElfinPort": 5000,
+			"Thermo":
+			{
+				"Number": 		 3,
+				"commandOFF": 	 "0401048000000089",
+				"commandON": 	 "040104810000008A",
+				"commandCHANGE": "040103220000002A",
+				"commandNUM": 	 4,
+				"curTemp": 		 7,
+				"setTemp": 		 9,
+				"chaTemp": 		 7,
+				"stateOFF": 	 "848101232500004E",
+				"stateON": 		 "848001232500004D",
+				"stateNUM": 	 6,
+				"stateONOFFNUM": 4
+			}
+		},
+		{
+			"tsDong": "DC",
+			"tsHo": "401ho",
+			"tsElfinIp": "192.168.88.10",
+			"tsElfinPort": 5000,
+			"Thermo":
+			{
+				"Number": 		 3,
+				"commandOFF": 	 "0401048000000089",
+				"commandON": 	 "040104810000008A",
+				"commandCHANGE": "040103220000002A",
+				"commandNUM": 	 4,
+				"curTemp": 		 7,
+				"setTemp": 		 9,
+				"chaTemp": 		 7,
+				"stateOFF": 	 "848101232500004E",
+				"stateON": 		 "848001232500004D",
+				"stateNUM": 	 6,
+				"stateONOFFNUM": 4
+			}
+		}
+	]
+}

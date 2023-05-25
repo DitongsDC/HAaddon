@@ -1,0 +1,60 @@
+  - platform: mqtt
+    name: DC_거실(R1)
+    modes:
+      - "off"
+      - "heat"
+    mode_state_topic: "homenet/103ho_Thermo1/power/state"
+    mode_command_topic: "homenet/103ho_Thermo1/power/command"
+    mode_state_template: >-
+     {% set modes = { 'OFF':'off', 'ON':'heat'} %}
+     {{ modes[value] if value in modes.keys() else 'off' }}
+    current_temperature_topic: "homenet/103ho_Thermo1/curTemp/state"
+    temperature_state_topic: "homenet/103ho_Thermo1/setTemp/state"
+    temperature_command_topic: "homenet/103ho_Thermo1/setTemp/command"
+    precision: 1.0
+    
+  - platform: mqtt
+    name: DC_각실(R2)
+    modes:
+      - "off"
+      - "heat"
+    mode_state_topic: "homenet/103ho_Thermo2/power/state"
+    mode_command_topic: "homenet/103ho_Thermo2/power/command"
+    mode_state_template: >-
+     {% set modes = { 'OFF':'off', 'ON':'heat'} %}
+     {{ modes[value] if value in modes.keys() else 'off' }}
+    current_temperature_topic: "homenet/103ho_Thermo2/curTemp/state"
+    temperature_state_topic: "homenet/103ho_Thermo2/setTemp/state"
+    temperature_command_topic: "homenet/103ho_Thermo2/setTemp/command"
+    precision: 1.0
+    
+  - platform: mqtt
+    name: DC_각실(R3)
+    modes:
+      - "off"
+      - "heat"
+    mode_state_topic: "homenet/103ho_Thermo3/power/state"
+    mode_command_topic: "homenet/103ho_Thermo3/power/command"
+    mode_state_template: >-
+     {% set modes = { 'OFF':'off', 'ON':'heat'} %}
+     {{ modes[value] if value in modes.keys() else 'off' }}
+    current_temperature_topic: "homenet/103ho_Thermo3/curTemp/state"
+    temperature_state_topic: "homenet/103ho_Thermo3/setTemp/state"
+    temperature_command_topic: "homenet/103ho_Thermo3/setTemp/command"
+    precision: 1.0
+    
+  - platform: mqtt
+    name: DC_각실(R4)
+    modes:
+      - "off"
+      - "heat"
+    mode_state_topic: "homenet/103ho_Thermo4/power/state"
+    mode_command_topic: "homenet/103ho_Thermo4/power/command"
+    mode_state_template: >-
+     {% set modes = { 'OFF':'off', 'ON':'heat'} %}
+     {{ modes[value] if value in modes.keys() else 'off' }}
+    current_temperature_topic: "homenet/103ho_Thermo4/curTemp/state"
+    temperature_state_topic: "homenet/103ho_Thermo4/setTemp/state"
+    temperature_command_topic: "homenet/103ho_Thermo4/setTemp/command"
+    precision: 1.0
+    

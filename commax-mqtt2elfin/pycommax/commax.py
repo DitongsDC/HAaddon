@@ -9,7 +9,7 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
-version = 'v1.3.8'
+version = 'v1.3.9'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
@@ -536,6 +536,7 @@ def main(CONFIG, OPTION, device_list):
         syncLoop.run_until_complete(send_to_elfin())
         syncLoop.close()
         log("[DC] End - updateSync")
+        time.sleep(10) # 10초후에 재시작
     
     mqtt_client.loop_stop()
 #----------------------------------------------------------------------------------------------

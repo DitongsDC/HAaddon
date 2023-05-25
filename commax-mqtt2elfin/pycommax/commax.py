@@ -9,7 +9,7 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
-version = 'v1.3.7'
+version = 'v1.3.8'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
@@ -525,18 +525,18 @@ def main(CONFIG, OPTION, device_list):
     mqtt_client.connect_async(tsMqttIp)
     mqtt_client.loop_start()
 
-    # 동기화 스레드 생성
-    thread = threading.Thread(target=updateSync)
-    thread.start()
-
-    #loop = asyncio.get_event_loop()
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(send_to_elfin())
-
-    log("end do_work")
-
-    loop.close()
+    # 동기화 스레드 생성 (무한루프)
+    isSyncLoop = True
+    while isSyncLoop:
+        log("[DC] Run - updateSync")
+        thread = threading.Thread(target=updateSync)
+        thread.start()
+        syncLoop = asyncio.new_event_loop()
+        asyncio.set_event_loop(syncLoop)
+        syncLoop.run_until_complete(send_to_elfin())
+        syncLoop.close()
+        log("[DC] End - updateSync")
+    
     mqtt_client.loop_stop()
 #----------------------------------------------------------------------------------------------
 

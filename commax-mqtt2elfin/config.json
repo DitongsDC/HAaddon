@@ -1,6 +1,6 @@
 {
   "name": "[DC] MQTT2elfin COMMAX Wallpad Controller with Python",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "slug": "dc_commax_mqtt2elfin_python",
   "url": "https://github.com/DitongsDC/HAaddon",
   "description": "[DC] mqtt 통신을 활용한 코맥스 월패드 컨트롤러",

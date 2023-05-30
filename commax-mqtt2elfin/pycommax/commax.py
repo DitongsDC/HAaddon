@@ -9,7 +9,7 @@ import socket
 share_dir = '/share'
 config_dir = '/data'
 data_dir = '/pycommax'
-version = 'v1.3.9'
+version = 'v1.4.0'
 
 def log(string):
     date = time.strftime('%Y-%m-%d %p %I:%M:%S', time.localtime(time.time()))
@@ -428,7 +428,8 @@ def main(CONFIG, OPTION, device_list):
                         else:
                             await slice_raw_data(recvBytes.hex().upper())
 
-                        TRYCNT = 1
+                        # 재시도 횟수
+                        TRYCNT = 0
                         if send_data['count'] < TRYCNT:
                             send_data['count'] = send_data['count'] + 1
                             QUEUE.append(send_data)
